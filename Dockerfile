@@ -1,13 +1,21 @@
-FROM nginx:1.10
+FROM centos:7 
 MAINTAINER Wyatt Pearsall<Wyatt.Pearsall@cfpb.gov>
 
-RUN apt-get update && \
-    apt-get install -y curl && \
-    apt-get install -y make && \
-    apt-get install -y g++ && \
-    curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
-    apt-get install -y nodejs && \
-    mkdir -p /usr/src/app
+# Install Nginx YUM Repo
+#RUN yum update -y && \
+#    yum install -y gcc-c++ make && \
+#    printf "[nginx]\nname=nginx repo\nbaseurl=https://nginx.org/packages/centos/7/x86_64/\ngpgcheck=0\nenabled=1" > /etc/yum.repos.d/nginx.repo
+
+# Install NodeJS YUM Repo
+#RUN curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
+
+#RUN yum update -y && \
+#    yum install -y nginx nodejs npm
+
+RUN yum update -y && \
+    yum install -y epel-release && \
+    yum update -y && \
+    yum install -y nginx nodejs npm 
 
 WORKDIR /usr/src/app
 COPY . /usr/src/app
